@@ -16,6 +16,7 @@ export default function FoodForm({
   onSubmit,
   onCancel,
 }) {
+  const today = getTodayInKorea()
   const [values, setValues] = useState(() => ({
     name: initialValues?.name ?? '',
     storageType: initialValues?.storageType ?? '냉장',
@@ -99,6 +100,7 @@ export default function FoodForm({
           type="date"
           aria-label="보관 시작일"
           required
+          max={today}
           value={values.startDate}
           onChange={(event) => updateField('startDate', event.target.value)}
           className={inputClass}

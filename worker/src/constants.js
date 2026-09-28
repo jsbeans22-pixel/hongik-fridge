@@ -1,0 +1,13 @@
+export const MAX_REQUEST_BYTES = 256 * 1024
+export const MAX_JOBS_PER_DEVICE = 300
+export const MAX_JOB_AGE_MS = 31 * 24 * 60 * 60 * 1000
+export const MAX_JOB_FUTURE_MS = 32 * 24 * 60 * 60 * 1000
+export const MAX_DELIVERY_ATTEMPTS = 3
+export const CLAIM_TIMEOUT_MS = 10 * 60 * 1000
+export const DIRECT_DELIVERY_BATCH_SIZE = 25
+export const QUEUE_DISPATCH_BATCH_SIZE = 500
+export const QUEUE_SEND_BATCH_SIZE = 100
+export const QUEUE_CONSUMER_CONCURRENCY = 3
+export const QUEUE_REDISPATCH_TIMEOUT_MS = 15 * 60 * 1000
+export const QUEUE_RETRY_BASE_DELAY_SECONDS = 15
+export const QUEUE_RETRY_MAX_DELAY_SECONDS = 5 * 60

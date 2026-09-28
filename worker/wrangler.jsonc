@@ -1,0 +1,81 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hongik-fridge-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "ALLOWED_ORIGINS": "http://localhost:5173,http://127.0.0.1:5173,https://app.hongikfridge.workers.dev",
+    "NOTIFICATION_DELIVERY_MODE": "queue",
+    "NOTIFICATION_DLQ_NAME": "hongik-fridge-notifications-dlq"
+  },
+  "secrets": {
+    "required": ["VAPID_PUBLIC_KEY", "VAPID_PRIVATE_KEY", "VAPID_SUBJECT"]
+  },
+  "ratelimits": [
+    {
+      "name": "IP_RATE_LIMITER",
+      "namespace_id": "26092401",
+      "simple": {
+        "limit": 300,
+        "period": 60
+      }
+    },
+    {
+      "name": "DEVICE_RATE_LIMITER",
+      "namespace_id": "26092402",
+      "simple": {
+        "limit": 30,
+        "period": 60
+      }
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hongik-fridge-db",
+      "database_id": "fd27a54e-f699-4bd2-8c98-ae3fa16b6039",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+  "queues": {
+    "producers": [
+      {
+        "binding": "NOTIFICATION_QUEUE",
+        "queue": "hongik-fridge-notifications"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "hongik-fridge-notifications",
+        "max_batch_size": 10,
+        "max_batch_timeout": 1,
+        "max_retries": 3,
+        "dead_letter_queue": "hongik-fridge-notifications-dlq"
+      },
+      {
+        "queue": "hongik-fridge-notifications-dlq",
+        "max_batch_size": 10,
+        "max_batch_timeout": 5,
+        "max_retries": 20,
+        "retry_delay": 300
+      }
+    ]
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    }
+  }
+}

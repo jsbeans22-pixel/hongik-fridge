@@ -1,6 +1,6 @@
 export default function EmptyFridge() {
   return (
-    <div className="py-8 text-center text-gray-400 text-xl font-semibold tracking-tight">
+    <div className="flex flex-1 items-center justify-center px-5 pb-4 text-center text-xl font-semibold tracking-tight text-gray-400">
       냉장고가 비어있어요
     </div>
   )

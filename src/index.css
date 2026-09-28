@@ -6,6 +6,7 @@
 }
 
 :root {
+  --bottom-navigation-height: 64px;
   --background: #f2f4f6;
   --foreground: #191f28;
   --card: #ffffff;

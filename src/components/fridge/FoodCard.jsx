@@ -6,6 +6,7 @@ import FoodProgress from './FoodProgress'
 export default function FoodCard({
   food,
   daysRemaining,
+  storageDays,
   onConsume,
   onRenew,
   onEdit,
@@ -16,7 +17,7 @@ export default function FoodCard({
   return (
     <article
       aria-label={`${food.name} 보관 정보`}
-      className={`px-5 py-4 ${
+      className={`px-5 py-5 ${
         isExpired ? 'bg-[#fecaca]' : 'bg-white'
       }`}
     >
@@ -25,7 +26,7 @@ export default function FoodCard({
         <FoodDeadline daysRemaining={daysRemaining} />
       </div>
 
-      <FoodProgress daysRemaining={daysRemaining} />
+      <FoodProgress daysRemaining={daysRemaining} storageDays={storageDays} />
       <FoodCardActions
         onConsume={onConsume}
         onRenew={onRenew}

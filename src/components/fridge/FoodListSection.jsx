@@ -2,11 +2,13 @@ import FoodItem from './FoodItem'
 import EmptyFridge from './EmptyFridge'
 import { useFoods } from '../../hooks/useFoods'
 import { useKoreaToday } from '../../hooks/useKoreaToday'
+import { useStorageDays } from '../../hooks/useStorageDays'
 import { getDaysRemaining } from '../../utils/storageDeadline'
 
 export default function FoodListSection() {
   const { foods, isLoading, error } = useFoods()
   const today = useKoreaToday()
+  const storageDays = useStorageDays()
 
   if (isLoading) {
     return (
@@ -25,9 +27,7 @@ export default function FoodListSection() {
   }
 
   if (foods.length === 0) {
-    return (
-      <><EmptyFridge /><div className="h-10" /></>
-    )
+    return <EmptyFridge />
   }
 
   return (
@@ -35,10 +35,11 @@ export default function FoodListSection() {
       <ul className="mx-5 overflow-hidden rounded-3xl bg-white">
         {foods.map((food, index) => (
           <li key={food.id}>
-            {index > 0 && <div style={{ height: 1, background: getDaysRemaining(food.startDate, today) < 0 ? '#fca5a5' : 'var(--border)', marginLeft: 68 }} />}
+            {index > 0 && <div style={{ height: 1, background: getDaysRemaining(food.startDate, today, storageDays) < 0 ? '#fca5a5' : 'var(--border)' }} />}
             <FoodItem
               food={food}
-              daysRemaining={getDaysRemaining(food.startDate, today)}
+              daysRemaining={getDaysRemaining(food.startDate, today, storageDays)}
+              storageDays={storageDays}
             />
           </li>
         ))}

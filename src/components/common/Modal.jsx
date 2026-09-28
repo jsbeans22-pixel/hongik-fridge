@@ -37,9 +37,9 @@ export default function Modal({ title, children, onClose, busy = false, error = 
           onClose()
         }
       }}
-      className="fixed left-1/2 top-1/2 m-0 max-h-none w-[calc(100%-40px)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-3xl border-0 bg-white p-0 text-[#191f28] backdrop:bg-black/40"
+      className="fixed left-1/2 top-1/2 m-0 max-h-[calc(100dvh-24px)] w-[calc(100%-24px)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border-0 bg-white p-0 text-[#191f28] backdrop:bg-black/40 min-[400px]:w-[calc(100%-40px)]"
     >
-      <div className="px-5 py-7">
+      <div className="max-h-[calc(100dvh-24px)] overflow-y-auto overscroll-contain px-5 py-7">
         <h2
           id={titleId}
           className={hideTitle ? 'sr-only' : `${titleSpacing} text-center text-lg font-bold`}

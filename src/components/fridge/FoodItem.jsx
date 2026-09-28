@@ -10,6 +10,7 @@ import { useDbAction } from '../../hooks/useDbAction'
 export default function FoodItem({
   food,
   daysRemaining,
+  storageDays,
 }) {
   const [activeModal, setActiveModal] = useState(null)
   const { run, isPending, error, clearError } = useDbAction()
@@ -44,14 +45,15 @@ export default function FoodItem({
       <FoodCard
         food={food}
         daysRemaining={daysRemaining}
+        storageDays={storageDays}
         onConsume={() => openModal('consume')}
         onEdit={() => openModal('edit')}
         onDelete={() => openModal('delete')}
-        onRenew={daysRemaining === 7 ? undefined : () => openModal('renew')}
+        onRenew={daysRemaining === storageDays ? undefined : () => openModal('renew')}
       />
 
       {activeModal === 'renew' && (
-        <RenewFoodModal food={food} busy={isPending} error={error}
+        <RenewFoodModal food={food} storageDays={storageDays} busy={isPending} error={error}
           onConfirm={handleRenew} onClose={closeModal} />
       )}
 
